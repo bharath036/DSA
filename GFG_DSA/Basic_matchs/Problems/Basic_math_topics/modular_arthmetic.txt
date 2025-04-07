@@ -1,0 +1,348 @@
+# Modular Arithmetic & Modular Inverse - Cheat Sheet
+
+## 1️⃣ What is Modular Arithmetic?
+Modular arithmetic is a system of arithmetic for integers where numbers "wrap around" upon reaching a given modulus.
+
+📌 Example:
+- `7 mod 3 = 1` (Because 7 divided by 3 gives remainder 1)
+- `14 mod 5 = 4` (Because 14 divided by 5 gives remainder 4)
+
+Modular arithmetic is widely used in **cryptography, number theory, hashing, and algorithm optimization**.
+
+---
+
+## 2️⃣ Why is Modulo Important in Programming?
+1. **Prevent Overflow:** Handling large numbers in constraints like `10^18`.
+2. **Efficient Calculations:** In mathematical algorithms like **modular exponentiation**.
+3. **Hashing & Cryptography:** RSA encryption, Hash functions use modular operations.
+4. **Avoid Floating-Point Errors:** Preventing precision errors in numerical computations.
+
+---
+
+## 3️⃣ Common Modular Operations
+📌 **Addition**: `(a + b) % m = [(a % m) + (b % m)] % m`
+📌 **Subtraction**: `(a - b) % m = [(a % m) - (b % m) + m] % m`
+📌 **Multiplication**: `(a * b) % m = [(a % m) * (b % m)] % m`
+📌 **Exponentiation**: `(a^b) % m` (Use **Modular Exponentiation**)
+📌 **Division**: `(a / b) % m` (Use **Modular Inverse** if `b` has an inverse under `m`)
+
+---
+
+## 4️⃣ Modular Inverse (Solving `a * x ≡ 1 (mod m)`)
+### ❓ What is Modular Inverse?
+The modular inverse of `a` under `m` is an integer `x` such that:
+
+    (a * x) % m = 1
+
+If `gcd(a, m) = 1` (i.e., `a` and `m` are coprime), then a modular inverse **exists**.
+
+### 🔴 When does Modular Inverse NOT Exist?
+If `gcd(a, m) ≠ 1`, modular inverse **does not exist**.
+
+---
+
+## 5️⃣ Methods to Find Modular Inverse
+
+### ✅ **Method 1: Brute Force (O(m) Complexity)**
+Try all values `x` from `1` to `m-1` and check `(a * x) % m == 1`.
+
+```python
+# Brute Force Method (Slow for large m)
+def mod_inverse_brute(a, m):
+    a = a % m
+    for x in range(1, m):
+        if (a * x) % m == 1:
+            return x
+    return -1  # No inverse exists
+
+print(mod_inverse_brute(3, 7))  # Output: 5
+```
+
+### ✅ **Method 2: Extended Euclidean Algorithm (O(log m))**
+This method efficiently computes the modular inverse using the **Extended Euclidean Algorithm**.
+
+```python
+# Extended Euclidean Algorithm for Modular Inverse
+def gcd_extended(a, b):
+    if b == 0:
+        return a, 1, 0  # Base case
+    gcd, x1, y1 = gcd_extended(b, a % b)
+    x = y1
+    y = x1 - (a // b) * y1
+    return gcd, x, y
+
+def mod_inverse_eea(a, m):
+    gcd, x, _ = gcd_extended(a, m)
+    if gcd != 1:
+        return -1  # Inverse does not exist
+    return x % m
+
+print(mod_inverse_eea(3, 7))  # Output: 5
+```
+
+### ✅ **Method 3: Fermat's Little Theorem (Only for Prime `m`, O(log m))**
+If `m` is **prime**, then:
+
+    a^(m-1) ≡ 1 (mod m)
+
+which means:
+
+    a^(m-2) ≡ a^(-1) (mod m)
+
+We can use **modular exponentiation** to find the inverse efficiently.
+
+```python
+# Modular Exponentiation
+def power_mod(a, b, m):
+    result = 1
+    a = a % m
+    while b > 0:
+        if b % 2 == 1:
+            result = (result * a) % m
+        a = (a * a) % m
+        b //= 2
+    return result
+
+def mod_inverse_fermat(a, m):
+    if gcd_extended(a, m)[0] != 1:
+        return -1
+    return power_mod(a, m-2, m)
+
+print(mod_inverse_fermat(3, 7))  # Output: 5
+```
+
+---
+
+## 6️⃣ Use Cases of Modular Arithmetic in Programming
+1️⃣ **Big Integer Operations:** Prevents overflow when dealing with large numbers (`10^18`).
+2️⃣ **Cryptography:** RSA encryption uses modular exponentiation.
+3️⃣ **Hashing Functions:** Hash tables, cryptographic hashes use modular arithmetic.
+4️⃣ **Number Theory Algorithms:** Fermat’s Theorem, Chinese Remainder Theorem (CRT).
+5️⃣ **Combinatorics:** Calculating large factorials under modulo (`n! % m`).
+6️⃣ **Competitive Programming:** Used in problems involving cycles, remainder calculations.
+
+---
+
+## 7️⃣ Summary Table
+| Method | Time Complexity | When to Use? |
+|--------|----------------|--------------|
+| Brute Force | O(m) | Small `m` values |
+| Extended Euclidean Algorithm | O(log m) | Works for all cases |
+| Fermat’s Theorem | O(log m) | Only when `m` is prime |
+
+---
+
+## 8️⃣ Quick Debugging Checklist
+✅ Ensure `gcd(a, m) = 1`, otherwise inverse **does not exist**.
+✅ Use **Extended Euclidean Algorithm** for **all cases**.
+✅ Use **Fermat’s Theorem** **only if `m` is prime**.
+✅ Use **modular exponentiation** when computing powers under modulo.
+
+---
+
+## 9️⃣ Final Takeaway 🎯
+If you need to compute the **modular inverse**, the **best method** is:
+✅ **Use Extended Euclidean Algorithm** (O(log m)) for all cases.
+✅ If `m` is prime, use **Fermat’s Theorem** with **modular exponentiation** (O(log m)).
+✅ Avoid **brute force**, as it is inefficient for large values of `m`.
+
+🚀 **Master modular arithmetic to excel in competitive programming and cryptography!**
+
+################################################################################################################################
+
+# Modular Arithmetic & Modular Inverse - Cheat Sheet
+
+## 1️⃣ What is Modular Arithmetic?
+Modular arithmetic is a system of arithmetic for integers where numbers "wrap around" upon reaching a given modulus.
+
+📌 Example:
+- `7 mod 3 = 1` (Because 7 divided by 3 gives remainder 1)
+- `14 mod 5 = 4` (Because 14 divided by 5 gives remainder 4)
+
+Modular arithmetic is widely used in **cryptography, number theory, hashing, and algorithm optimization**.
+
+---
+
+## 2️⃣ Why is Modulo Important in Programming?
+1. **Prevent Overflow:** Handling large numbers in constraints like `10^18`.
+2. **Efficient Calculations:** In mathematical algorithms like **modular exponentiation**.
+3. **Hashing & Cryptography:** RSA encryption, Hash functions use modular operations.
+4. **Avoid Floating-Point Errors:** Preventing precision errors in numerical computations.
+
+---
+
+## 3️⃣ Modular Operations & Properties
+
+### 🔢 **Basic Modular Operations**
+📌 **Addition**: `(a + b) % m = [(a % m) + (b % m)] % m`
+📌 **Subtraction**: `(a - b) % m = [(a % m) - (b % m) + m] % m`
+📌 **Multiplication**: `(a * b) % m = [(a % m) * (b % m)] % m`
+📌 **Exponentiation**: `(a^b) % m` (Use **Modular Exponentiation**)
+📌 **Division**: `(a / b) % m` (Use **Modular Inverse** if `b` has an inverse under `m`)
+
+### 🔹 **Properties of Modular Arithmetic**
+1. **Commutative Property:**
+   - `(a + b) % m = (b + a) % m`
+   - `(a * b) % m = (b * a) % m`
+
+2. **Associative Property:**
+   - `((a + b) + c) % m = (a + (b + c)) % m`
+   - `((a * b) * c) % m = (a * (b * c)) % m`
+
+3. **Distributive Property:**
+   - `(a * (b + c)) % m = [(a * b) % m + (a * c) % m] % m`
+
+4. **Identity Elements:**
+   - Additive Identity: `0` → `(a + 0) % m = a % m`
+   - Multiplicative Identity: `1` → `(a * 1) % m = a % m`
+
+5. **Inverse Elements:**
+   - Additive Inverse: `(-a) % m = (m - a) % m`
+   - Multiplicative Inverse: `a^(-1) % m` exists if `gcd(a, m) = 1`.
+
+---
+
+## 4️⃣ Modular Inverse (Solving `a * x ≡ 1 (mod m)`)
+### ❓ What is Modular Inverse?
+The modular inverse of `a` under `m` is an integer `x` such that:
+
+    (a * x) % m = 1
+
+If `gcd(a, m) = 1` (i.e., `a` and `m` are coprime), then a modular inverse **exists**.
+
+### 🔴 When does Modular Inverse NOT Exist?
+If `gcd(a, m) ≠ 1`, modular inverse **does not exist**.
+
+---
+
+## 5️⃣ Methods to Find Modular Inverse
+
+### ✅ **Method 1: Brute Force (O(m) Complexity)**
+Try all values `x` from `1` to `m-1` and check `(a * x) % m == 1`.
+
+```python
+# Brute Force Method (Slow for large m)
+def mod_inverse_brute(a, m):
+    a = a % m
+    for x in range(1, m):
+        if (a * x) % m == 1:
+            return x
+    return -1  # No inverse exists
+
+print(mod_inverse_brute(3, 7))  # Output: 5
+```
+
+### ✅ **Method 2: Extended Euclidean Algorithm (O(log m))**
+This method efficiently computes the modular inverse using the **Extended Euclidean Algorithm**.
+
+```python
+# Extended Euclidean Algorithm for Modular Inverse
+def gcd_extended(a, b):
+    if b == 0:
+        return a, 1, 0  # Base case
+    gcd, x1, y1 = gcd_extended(b, a % b)
+    x = y1
+    y = x1 - (a // b) * y1
+    return gcd, x, y
+
+def mod_inverse_eea(a, m):
+    gcd, x, _ = gcd_extended(a, m)
+    if gcd != 1:
+        return -1  # Inverse does not exist
+    return x % m
+
+print(mod_inverse_eea(3, 7))  # Output: 5
+```
+
+### ✅ **Method 3: Fermat's Little Theorem (Only for Prime `m`, O(log m))**
+If `m` is **prime**, then:
+
+    a^(m-1) ≡ 1 (mod m)
+
+which means:
+
+    a^(m-2) ≡ a^(-1) (mod m)
+
+We can use **modular exponentiation** to find the inverse efficiently.
+
+```python
+# Modular Exponentiation
+def power_mod(a, b, m):
+    result = 1
+    a = a % m
+    while b > 0:
+        if b % 2 == 1:
+            result = (result * a) % m
+        a = (a * a) % m
+        b //= 2
+    return result
+
+def mod_inverse_fermat(a, m):
+    if gcd_extended(a, m)[0] != 1:
+        return -1
+    return power_mod(a, m-2, m)
+
+print(mod_inverse_fermat(3, 7))  # Output: 5
+```
+
+---
+
+## 6️⃣ Use Cases of Modular Arithmetic in Programming
+1️⃣ **Big Integer Operations:** Prevents overflow when dealing with large numbers (`10^18`).
+2️⃣ **Cryptography:** RSA encryption uses modular exponentiation.
+3️⃣ **Hashing Functions:** Hash tables, cryptographic hashes use modular arithmetic.
+4️⃣ **Number Theory Algorithms:** Fermat’s Theorem, Chinese Remainder Theorem (CRT).
+5️⃣ **Combinatorics:** Calculating large factorials under modulo (`n! % m`).
+6️⃣ **Competitive Programming:** Used in problems involving cycles, remainder calculations.
+
+---
+
+## 7️⃣ Summary Table
+| Method | Time Complexity | When to Use? |
+|--------|----------------|--------------|
+| Brute Force | O(m) | Small `m` values |
+| Extended Euclidean Algorithm | O(log m) | Works for all cases |
+| Fermat’s Theorem | O(log m) | Only when `m` is prime |
+
+---
+
+## 8️⃣ Quick Debugging Checklist
+✅ Ensure `gcd(a, m) = 1`, otherwise inverse **does not exist**.
+✅ Use **Extended Euclidean Algorithm** for **all cases**.
+✅ Use **Fermat’s Theorem** **only if `m` is prime**.
+✅ Use **modular exponentiation** when computing powers under modulo.
+
+---
+
+## 9️⃣ Final Takeaway 🎯
+Master modular arithmetic to **prevent overflow, optimize calculations, and enhance cryptographic security**! 🚀
+
+    def modInverse(self, a, m):
+        g, x, y = self.gcd_extended(a, m)
+        if g != 1:
+            return -1  # Inverse does not exist
+        return x % m  # Ensure positive result
+
+    # Helper function to compute Extended GCD
+    def gcd_extended(self, a, b):
+        if b == 0:
+            return a, 1, 0  # Base case
+        g, x1, y1 = self.gcd_extended(b, a % b)
+        x = y1
+        y = x1 - (a // b) * y1
+        return g, x, y
+
+------------------------------------------------------------------------------------------------------------------
+
+
+class Solution:    
+    ##Complete this function
+    def modInverse(self,a,m):
+        ##Your code here
+        a=a%m
+        
+        for x in range(1,m):
+            if((a*x)%m==1):
+                return x
+                
+        return -1

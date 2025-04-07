@@ -1,0 +1,22 @@
+A string is a sequence of characters.
+A string uses ' or ".
+For strings + means concatenate.
+When a string contains numbers it is still a string. We can convert string to integer and vice-versa.
+--> we can get any single character in a string using index specified in square bracket
+
+fruit = 'banana'
+letter = fruit[1]
+print(letter)
+output: a 
+
+--> The built-in function len gives length of string
+--> Using while statement and an iteration variable, and length 
+function , we can construct a loop to look each of the letters in 
+a string individually.
+
+fruit = 'banana'
+index = 0
+while index < length(fruit):
+	letter = fruit[index]
+	print(index,letter)
+	index +=1 

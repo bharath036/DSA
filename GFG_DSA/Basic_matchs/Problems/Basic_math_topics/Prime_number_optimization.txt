@@ -1,0 +1,111 @@
+## **Optimized Prime Number Check Explanation**
+
+### **Code Implementation**
+```python
+class Solution:
+    def isPrime(self, N):
+        if N == 1:  # 1 is not a prime number
+            return False
+
+        if N == 2 or N == 3:  # 2 and 3 are prime numbers
+            return True
+
+        if N % 2 == 0 or N % 3 == 0:  # Eliminate even numbers and multiples of 3
+            return False
+
+        i = 5
+        while i * i <= N:  # Check divisibility using numbers of the form (6k ± 1)
+            if N % i == 0 or N % (i + 2) == 0:
+                return False
+            i += 6  # Move to the next potential prime divisor
+
+        return True
+```
+
+---
+
+### **Understanding the Optimization**
+
+#### **1. Handling Small Numbers Efficiently**
+- Directly return `False` for `N == 1` since 1 is not prime.  
+- Return `True` for `N == 2` or `N == 3` since they are prime.  
+
+#### **2. Eliminating Even Numbers and Multiples of 3**
+- If `N` is even (`N % 2 == 0`) or a multiple of 3 (`N % 3 == 0`), return `False`.  
+- This eliminates unnecessary checks for even numbers and numbers divisible by 3.  
+
+#### **3. Checking Only Numbers of the Form `6k ± 1`**
+- All prime numbers greater than 3 can be written as `6k ± 1` (where `k` is an integer).  
+- Instead of checking every number, we only check divisibility by `i` (starting from `5`) and `i + 2` (next odd number).
+- We increment `i` by `6` in each iteration to efficiently cover potential primes.
+
+---
+
+### **Why is This Faster?**
+- **Reduces the number of checks from `O(N)` to `O(√N)`.**  
+- **Skips even numbers and multiples of 3**, reducing unnecessary computations.  
+- **Only checks numbers in the form `6k ± 1`**, avoiding redundant checks.  
+
+🚀 **This method significantly improves performance for large values of `N`!**
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+**# Optimized Prime Check - Explanation**
+
+### **Understanding the Optimization Logic**
+
+When checking if a number `N` is prime, we optimize the process to reduce unnecessary calculations. Here’s how:
+
+---
+
+### **1. Handling Small Cases Directly**
+- If `N = 1`, return `False` because 1 is not a prime number.
+- If `N = 2` or `N = 3`, return `True` because these are the smallest prime numbers.
+
+---
+
+### **2. Eliminating Obvious Non-Prime Numbers**
+- If `N` is **even (`N % 2 == 0`)**, it’s **not prime** (except for `2`).
+- If `N` is **a multiple of 3 (`N % 3 == 0`)**, it’s **not prime** (except for `3`).
+
+This immediately removes half of the numbers (even numbers) and one-third of the remaining numbers (multiples of 3), making our check much faster.
+
+---
+
+### **3. Only Checking Numbers of the Form `6k ± 1`**
+#### **Why `6k ± 1`?**
+- Every prime number **greater than 3** is of the form `6k ± 1`, where `k` is an integer.
+- Numbers that are **divisible by 2 or 3** are already eliminated.
+- This means we only need to check numbers like `5, 7, 11, 13, 17, 19, 23, 25...` instead of checking every number up to `N`.
+
+📌 **Example:**  
+Instead of checking every number, we skip directly to numbers that *could* be prime:
+- `5, 7`
+- `11, 13`
+- `17, 19`
+- `23, 25`, etc.
+
+This reduces the number of checks drastically.
+
+---
+
+### **4. Stopping at √N Instead of N**
+Instead of looping from `2` to `N-1`, we only check up to `√N` because:
+- If `N` has a factor larger than `√N`, then it must have a smaller factor **before** `√N`.
+- This reduces the number of checks from **`O(N)` to `O(√N)`**, making it much faster.
+
+📌 **Example:**  
+For `N = 49`, we only check up to `√49 = 7` instead of all numbers up to `49`.
+
+---
+
+### **Final Optimized Approach**
+1. Check small cases (`1, 2, 3`) directly.
+2. Eliminate obvious cases (`even numbers` and `multiples of 3`).
+3. Only check numbers of the form `6k ± 1`.
+4. Stop checking at `√N`.
+
+This reduces unnecessary calculations, making the algorithm **much faster and more efficient**. 🚀
+
+
+
