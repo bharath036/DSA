@@ -41,6 +41,7 @@ print(gcd(a,b))
 print(print())
 
 '''
+For GCD
 ### 📝 **Euclidean Principle for GCD (Greatest Common Divisor)**
 
 **Definition:**
