@@ -9,6 +9,7 @@ gcd = 2*2*3 =12
 '''
 #Using naive approch. iterate through it till min number and update gcd if the 
 #condition satisfies
+'''
 def gcd(a,b):
     gcd  = 1
     for i in range(1,min(a,b)+1):
@@ -20,15 +21,15 @@ def gcd(a,b):
 a = 36
 b =60 
 print(gcd(a,b))
-
+'''
 #The above solution is insuffient for larger problems
 
 #Eucidian Algorithm 
-#If we take two numbers a &b. lets assume a is greater than b
+#If we take two numbers a & b. lets assume a is greater than b
 # we will proceed when b!=0 
 #then swap and calculate remainder
 #and finally we return a 
-
+'''
 def gcd_Eucidian(a,b):
     
     while b!=0:
@@ -39,6 +40,7 @@ a = 36
 b = 60 
 print(gcd(a,b))
 print(print())
+'''
 
 '''
 For GCD
@@ -86,4 +88,15 @@ The remainder reduces the problem size, ensuring logarithmic time complexity.
 💡 *Remember: Keep dividing until remainder is 0!* 🚀
 
 
+'''
+'''
+def gcd(a,b):
+    if a>b:
+        a,b = b,a 
+    for i in range(a,1,-1):
+        print('i:outer:',i)
+        if a%i==0 and b%i == 0:
+            return i 
+
+print(gcd(36,60))
 '''
