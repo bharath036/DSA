@@ -109,3 +109,88 @@ d4 = dict(zip(l2,l3))
 print(d4)
 
 '''
+
+#Set comprehensions
+
+'''
+l = {10,20,3,4,10,20,7,3}
+
+s1 = {x for x in l if x%2==0 }
+s2 = {x for x in l if x%2!=0 }  # set comprehension
+
+print(s1)
+print(s2)
+'''
+
+
+#Inverting Dictionary
+'''
+d1 = {101:'gfg',103:'practise','ide':102}
+d2 = {val:key for key,val in d1.items()}
+print(d2)
+
+'''
+
+#Generator Comprehensions
+'''
+input_list = [1,2,3,4,5,6,7,8,8]
+
+output_gen = (var for var in input_list if var%2==0)
+print("Output values using generator comprehension",end =" ")
+for var in output_gen:
+    print(var)
+
+'''
+
+#Largest Element in a List 
+'''
+def lar_ele(lst):
+    lar = 0
+    for i in range(len(lst)):
+        if lst[i]>lar:
+            lar = lst[i]
+
+    return lar 
+    
+lst = [2,3,5,8,9,6,1]
+print(lar_ele(lst))
+
+'''
+
+#Second larget element in a list
+'''
+def sec_lar(lst):
+    sec_lar1 = lst[0]
+    fir_lar = lst[0]
+
+    for i in range(len(lst)):
+        if lst[i]>fir_lar:
+            fir_lar = lst[i]
+
+  
+
+    for i in range(len(lst)):
+        if lst[i]<fir_lar:
+            if sec_lar1==fir_lar or lst[i] > sec_lar1:
+                sec_lar1 = lst[i]
+
+    return sec_lar1 
+
+lst = [2,3,4,5,6,3,5,7,4,6,9,8,8]
+print(sec_lar(lst))
+'''
+
+
+#Check if a list is Sorted
+
+def is_sort(lst):
+    lst2 = sorted(lst)
+
+    if lst == lst2:
+        return True
+    else:
+        return False
+    
+
+lst = [1,2,3,4,5,6,7,8]
+print(is_sort(lst))
