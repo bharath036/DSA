@@ -182,7 +182,7 @@ print(sec_lar(lst))
 
 
 #Check if a list is Sorted
-
+'''
 def is_sort(lst):
     lst2 = sorted(lst)
 
@@ -194,3 +194,63 @@ def is_sort(lst):
 
 lst = [1,2,3,4,5,6,7,8]
 print(is_sort(lst))
+'''
+
+#Reverse a list
+''' 
+reverse() method: Reverses the original list in place.
+reversed() function: Returns a new reversed list.
+Slicing [::-1]: Creates a new reversed list using slicing.
+'''
+
+#2 pointer approach 
+'''
+def reverse_list(l):
+    s = 0
+    e = len(l)-1 
+
+    while s < e:
+        l[s],l[e] = l[e],l[s] #swapping the elements
+        s=s+1 
+        e = e-1 
+    return l  
+
+l = [1,2,3,4]
+print(reverse_list(l))
+
+'''
+
+#Remove duplicates  
+#Below wont work effectively
+''' 
+def remove_duplicates(arr,n):
+    temp = [0]*n
+    res = 1
+
+    for i in range(1,n):
+        if temp[res-1] != arr[i]:
+            temp[res]=arr[i]
+            res +=1 
+
+    for i in range(0,res):
+        arr[i] = temp[i]
+
+    return res 
+n = 6
+arr = [10,10,20,20,30,30]
+print(remove_duplicates(arr,n))
+'''
+'''
+def removeDuplicates(arr, n):
+    res=1 
+    for i in range(1, n):
+        if(arr[res-1]!=arr[i]):
+            arr[res]=arr[i]
+            res+=1
+    return res
+    
+n=7
+arr=[10, 20, 20, 30, 30, 30, 30]
+print(removeDuplicates(arr, n))
+
+'''
